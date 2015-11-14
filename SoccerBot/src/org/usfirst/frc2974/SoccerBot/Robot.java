@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         Scheduler.getInstance().add(new Drive());
         Scheduler.getInstance().add(new IntakeManual());
+        Scheduler.getInstance().add(new ShowInputs());
     }
 
     /**
