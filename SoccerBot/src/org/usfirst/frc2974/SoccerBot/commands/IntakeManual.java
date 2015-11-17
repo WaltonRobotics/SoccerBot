@@ -1,6 +1,5 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
-import org.usfirst.frc2974.SoccerBot.Gamepad;
 import org.usfirst.frc2974.SoccerBot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

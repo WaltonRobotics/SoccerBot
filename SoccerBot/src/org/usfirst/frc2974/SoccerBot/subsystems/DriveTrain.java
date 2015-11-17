@@ -13,7 +13,6 @@ package org.usfirst.frc2974.SoccerBot.subsystems;
 
 import org.usfirst.frc2974.SoccerBot.RobotMap;
 import org.usfirst.frc2974.SoccerBot.commands.*;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.command.Subsystem;

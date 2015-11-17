@@ -1,7 +1,6 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
 import org.usfirst.frc2974.SoccerBot.Robot;
-import org.usfirst.frc2974.SoccerBot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
