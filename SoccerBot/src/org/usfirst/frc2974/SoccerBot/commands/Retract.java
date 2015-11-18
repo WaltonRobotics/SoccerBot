@@ -6,7 +6,7 @@ import org.usfirst.frc2974.SoccerBot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *when retract button is pressed, kicker retracts
  */
 public class Retract extends Command {
 
@@ -19,6 +19,7 @@ public class Retract extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    // when button (in OI) is pushed, kicker retracts 
     protected void execute() {
     	if(Robot.oi.retractButton.get())
     	{
@@ -27,6 +28,7 @@ public class Retract extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    // limits retraction, tells when kicker reaches limit
     protected boolean isFinished() {
         return !RobotMap.limitSwitchBackward.get();
     }
