@@ -5,7 +5,7 @@ import org.usfirst.frc2974.SoccerBot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *checks if bot is ready for a kick
  */
 public class GetReady extends Command {
 
@@ -19,6 +19,7 @@ public class GetReady extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    // asks if ready button is hit, outputs a response in code
     protected void execute() {
     	
     	if(Robot.oi.readyButton1.get()||Robot.oi.readyButton2.get())
