@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *controls loading of the soccer bot
  */
 public class IntakeLoad extends Command {
 	private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
@@ -18,12 +18,14 @@ public class IntakeLoad extends Command {
     }
 
     // Called just before this Command runs the first time
+    //sets the required and acceptable angles of loader
     protected void initialize() {
     	SmartDashboard.putNumber("angle", 0);
     	SmartDashboard.putNumber("offset", .01);
     }
 
     // Called repeatedly when this Command is scheduled to run
+    //controls the angle and offset of loading arm
     protected void execute() {
     	SmartDashboard.putNumber("analog pot",angleSensor.get());
     	Robot.intake.setMotorPower(1);
