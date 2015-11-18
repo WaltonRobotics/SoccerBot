@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc2974.SoccerBot.Robot;
 
 /**
- *
+ *gets Xbox (in OI) left and right to drive bot
  */
 public class Drive extends Command {
 
@@ -37,6 +37,7 @@ public class Drive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    // gets Xbox joystick position and sets speed
     protected void execute() {
     	double left = Robot.oi.xbox.getLeftY();
     	double right = Robot.oi.xbox.getRightY();
