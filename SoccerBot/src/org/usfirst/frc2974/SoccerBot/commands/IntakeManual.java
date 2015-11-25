@@ -1,5 +1,6 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
+import org.usfirst.frc2974.SoccerBot.Gamepad;
 import org.usfirst.frc2974.SoccerBot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,7 +26,7 @@ public class IntakeManual extends Command {
 	 * Called just before this Command runs the first time
 	 */
 	protected void initialize() {
-		SmartDashboard.putBoolean("manual mode", false);
+		Robot.intake.setArmMovement(Intake.ArmMovement.block);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -34,31 +35,35 @@ public class IntakeManual extends Command {
 	 * Moves the loader up and down. Also runs the loaders TALON motors.
 	 */
 	protected void execute() {
-		if (SmartDashboard.getBoolean("manual mode")) {
-			boolean isPressed = Robot.oi.intakeUpDownButton.get();
 
-			switch (Robot.intake.getAction()) {
-			// if not pressed and in up- do nothing
-			case up:
-				if (!isPressed)
-					break;
-				// if pressed and in fall- do nothing
-			case fall:
-				if (isPressed)
-					break;
-				// if pressed and in fall, go up
-				if (isPressed) {
-					Robot.intake.setArmMovement(Intake.ArmMovement.up);
-				} else {// if not pressed and in up, fall
-					Robot.intake.setArmMovement(Intake.ArmMovement.fall);
-				}
+		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
+		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
 
+		switch (Robot.intake.getAction()) {
+		// if not pressed and in up- do nothing
+		case up:
+			if (!isUpPressed) {
+				Robot.intake.setArmMovement(Intake.ArmMovement.block);
 			}
-			
-			//Sets the motor speed for the TALON motor. Using the left trigger. Holding it down spins it one way. 
-			//Letting go spins it the other way
-			Robot.intake.setMotorPower((Robot.oi.xbox.getLeftTrigger() - .5) * 2);  
+			break;
+		// if pressed and in fall - do nothing
+		case fall:
+			if (!isFallPressed) {
+				Robot.intake.setArmMovement(Intake.ArmMovement.block);
+			}
+			break;
+		// if pressed and in fall, go up
+		case block:
+			if (isUpPressed) {
+				Robot.intake.setArmMovement(Intake.ArmMovement.up);
+			} else if (isFallPressed) {
+				Robot.intake.setArmMovement(Intake.ArmMovement.fall);
+			}
+			break;
 		}
+
+		Robot.intake.setMotorPower((Robot.oi.xbox.getLeftTrigger() - .5) * 2);
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

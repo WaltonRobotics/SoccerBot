@@ -36,7 +36,7 @@ public class Kick extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-    	return Robot.kicker.getPosition() == Kicker.Position.extended;
+    	return isFinishedFlag;
     }
 
     // Called once after isFinished returns true

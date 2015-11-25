@@ -35,6 +35,7 @@ public class RobotMap {
     public static SpeedController driveTrainBackL;
     public static SpeedController driveTrainBackR;
     public static Solenoid intakeArmSolenoid;
+    public static Solenoid intakeArmBlock; 
     public static AnalogPotentiometer intakeAngleSensor;
     public static CANTalon intakeArmTalon;
     public static Compressor compressor;
@@ -80,6 +81,9 @@ public class RobotMap {
         
         intakeArmSolenoid = new Solenoid(0, 4);
         LiveWindow.addActuator("intake", "ArmSolenoid", intakeArmSolenoid);
+        
+        intakeArmBlock = new Solenoid(0, 5);
+        LiveWindow.addActuator("intake", "ArmBlock", intakeArmBlock);
         
         intakeAngleSensor = new AnalogPotentiometer(0, 1.0, 0.0);
         LiveWindow.addSensor("intake", "AngleSensor", intakeAngleSensor);
