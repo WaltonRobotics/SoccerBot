@@ -98,7 +98,7 @@ public class Intake extends Subsystem {
     
     public ArmPosition getArmPosition()
     {
-    	double postion = angleSensor.get();
+    	double position = angleSensor.get();
     	if(position > transitionUpHigh){
     		return ArmPosition.up;	
     	}
