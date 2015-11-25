@@ -62,7 +62,7 @@ public class Intake extends Subsystem {
     		break;
     	case fall:
     		armSolenoid.set(false);
-    		break;
+    		break;  		
     	
     	}
     	action = move;

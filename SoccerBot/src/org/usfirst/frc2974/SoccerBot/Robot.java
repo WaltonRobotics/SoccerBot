@@ -94,14 +94,14 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	RobotMap.compressor.setClosedLoopControl(true);
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Scheduler.getInstance().add(new Drive());
-        Scheduler.getInstance().add(new IntakeManual());
-        Scheduler.getInstance().add(new ShowInputs());
-        Scheduler.getInstance().add(new Kick());
-        Scheduler.getInstance().add(new GetReady());
-        Scheduler.getInstance().add(new IntakeLoad());
-        Scheduler.getInstance().add(new IntakeFlat());
-        Scheduler.getInstance().add(new Retract());
+//        Scheduler.getInstance().add(new Drive());
+//        Scheduler.getInstance().add(new IntakeManual());
+//        Scheduler.getInstance().add(new ShowInputs());
+//        Scheduler.getInstance().add(new Kick());
+//        Scheduler.getInstance().add(new GetReady());
+//        Scheduler.getInstance().add(new IntakeLoad());
+//        Scheduler.getInstance().add(new IntakeFlat());
+//        Scheduler.getInstance().add(new Retract());
     }
 
     /**

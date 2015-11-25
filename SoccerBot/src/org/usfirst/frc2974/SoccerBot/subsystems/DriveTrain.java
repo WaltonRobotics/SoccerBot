@@ -49,9 +49,9 @@ public class DriveTrain extends Subsystem {
     }
     public void setSpeeds(double left, double right)
     {
-    	driveTrainBackL.set(left);
+    	driveTrainBackL.set(-left);
     	driveTrainBackR.set(right);
-    	driveTrainFrontL.set(left);
+    	driveTrainFrontL.set(-left);
     	driveTrainFrontR.set(right);
     }
 }

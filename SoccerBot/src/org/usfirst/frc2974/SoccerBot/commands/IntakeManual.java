@@ -7,11 +7,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc2974.SoccerBot.subsystems.*;;
 
+
 /**
- *
+ * @author piyus
+ * @date 11-17-2015
  */
 public class IntakeManual extends Command {
-
+	
 	public IntakeManual() {
 		super();
 
@@ -19,11 +21,18 @@ public class IntakeManual extends Command {
 	}
 
 	// Called just before this Command runs the first time
+	/**
+	 * Called just before this Command runs the first time
+	 */
 	protected void initialize() {
 		SmartDashboard.putBoolean("manual mode", false);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
+	/**
+	 * Runs the robot. 
+	 * Moves the loader up and down. Also runs the loaders TALON motors.
+	 */
 	protected void execute() {
 		if (SmartDashboard.getBoolean("manual mode")) {
 			boolean isPressed = Robot.oi.intakeUpDownButton.get();
@@ -33,7 +42,7 @@ public class IntakeManual extends Command {
 			case up:
 				if (!isPressed)
 					break;
-				// if pressed and in fall - do nothing
+				// if pressed and in fall- do nothing
 			case fall:
 				if (isPressed)
 					break;
@@ -45,22 +54,34 @@ public class IntakeManual extends Command {
 				}
 
 			}
-
-			Robot.intake.setMotorPower((Robot.oi.xbox.getLeftTrigger() - .5) * 2);
+			
+			//Sets the motor speed for the TALON motor. Using the left trigger. Holding it down spins it one way. 
+			//Letting go spins it the other way
+			Robot.intake.setMotorPower((Robot.oi.xbox.getLeftTrigger() - .5) * 2);  
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
+	/**
+	 * Make this return true when this Command no longer needs to run execute()
+	 */
 	protected boolean isFinished() {
 		return false;
 	}
 
 	// Called once after isFinished returns true
+	/**
+	 * Called once after isFinished returns true
+	 */
 	protected void end() {
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
+	/**
+	 * Called when another command which requires one or more of the same
+	 * subsystems is scheduled to run
+	 */
 	protected void interrupted() {
 	}
 }
