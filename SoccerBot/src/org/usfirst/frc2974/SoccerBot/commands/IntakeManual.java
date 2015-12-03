@@ -34,7 +34,7 @@ public class IntakeManual extends Command {
 	 * Runs the robot. 
 	 * Moves the loader up and down. Also runs the loaders TALON motors.
 	 */
-	protected void execute() {
+	protected void execute() { 
 
 		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
@@ -61,8 +61,8 @@ public class IntakeManual extends Command {
 			}
 			break;
 		}
-
-		Robot.intake.setMotorPower((Robot.oi.xbox.getLeftTrigger() - .5) * 2);
+		
+		Robot.intake.setMotorPower(-Robot.oi.xbox.getLeftTrigger());
 
 	}
 

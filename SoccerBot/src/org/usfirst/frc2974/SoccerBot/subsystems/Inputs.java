@@ -26,7 +26,7 @@ public class Inputs extends Subsystem {
     DigitalInput digital9 = RobotMap.digital9;
     
 
-    AnalogInput analog0 = RobotMap.analog0;
+   // AnalogInput analog0 = RobotMap.analog0;
     AnalogInput analog1 = RobotMap.analog1;
     AnalogInput analog2 = RobotMap.analog2;
     AnalogInput analog3 = RobotMap.analog3;
@@ -52,7 +52,7 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Digital In 8", digital8);
 		SmartDashboard.putData("Digital In 9", digital9);
 
-		SmartDashboard.putData("Analog In 0", analog0);
+		//SmartDashboard.putData("Analog In 0", analog0);
 		SmartDashboard.putData("Analog In 1", analog1);
 		SmartDashboard.putData("Analog In 2", analog2);
 		SmartDashboard.putData("Analog In 3", analog3);

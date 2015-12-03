@@ -29,7 +29,7 @@ public class Kicker extends Subsystem {
 	
     public void initDefaultCommand() {
         
-        setDefaultCommand(new Retract());
+        //setDefaultCommand(new Retract());
         //retract();
         //action = KickPosition.retract;
         

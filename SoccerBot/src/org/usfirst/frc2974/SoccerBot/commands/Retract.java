@@ -7,6 +7,7 @@ import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.LatchPosition;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *when retract button is pressed, kicker retracts
@@ -59,23 +60,18 @@ public class Retract extends Command {
     		}
     		
     	}
-    	if(Robot.oi.kickButton.get())
-    	{
-    		Kick kick = new Kick();
-    		kick.start();
-    	}
-    	
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     // limits retraction, tells when kicker reaches limit
     protected boolean isFinished() {
-        return false;
+        return Robot.oi.kickButton.get();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Scheduler.getInstance().add(new Kick());
     }
 
     // Called when another command which requires one or more of the same
