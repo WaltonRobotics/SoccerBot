@@ -10,13 +10,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeFlat extends Command {
-
+	
+	boolean isFinishedFlat = false;
+	
     public IntakeFlat() {
-        requires(Robot.intake);
+        requires(Robot.intake); 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	isFinishedFlat = false;
     	Robot.intake.setMotorPower(0);
     	Robot.intake.setArmMovement(Intake.ArmMovement.fall);
     }
@@ -28,7 +31,11 @@ public class IntakeFlat extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isFinishedFlat;
+    }
+    
+    protected void endFlat() {
+    	isFinishedFlat = true; 
     }
 
     // Called once after isFinished returns true
