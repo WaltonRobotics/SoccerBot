@@ -56,6 +56,7 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Analog In 1", analog1);
 		SmartDashboard.putData("Analog In 2", analog2);
 		SmartDashboard.putData("Analog In 3", analog3);
+		SmartDashboard.putData(" pot", RobotMap.intakeAngleSensor);
 		
 	}
 	

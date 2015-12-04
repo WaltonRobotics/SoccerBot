@@ -1,13 +1,13 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
 import org.usfirst.frc2974.SoccerBot.Robot;
-import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.subsystems.Kicker;
+
 import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.LatchPosition;
 
-import edu.wpi.first.wpilibj.Timer;
+
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+
 
 /**
  *when retract button is pressed, kicker retracts
@@ -21,57 +21,113 @@ public class Retract extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kicker.setOff();
-    	Robot.kicker.setLatch(LatchPosition.latched);
+    	Robot.kicker.setLatch(LatchPosition.unlatched);
+    	changeState(KickState.dangling);
     }
-    Boolean isBeingRetracted = false;
-
+    
     // Called repeatedly when this Command is scheduled to run
     // when button (in OI) is pushed, kicker retracts 
+    Double time;
+    KickState state;
+    boolean flag = false;
+	public enum KickState {
+		dangling, retracted, charged, initCycle, pickupCycle, latchCycle
+
+	}
+	public void changeState(KickState ks)
+	{	time = timeSinceInitialized();
+		state = ks;
+		flag =false;
+	}
     protected void execute() {
-    	if(Robot.oi.retractButton.get())
+    	switch(state)
     	{
-    		if(Robot.kicker.getLatchState() == Kicker.LatchPosition.latched)
+    	case dangling:
+    	{
+    		if(timeSinceInitialized()-time>1)
     		{
-    			Robot.kicker.setLatch(Kicker.LatchPosition.unlatched);
+    			changeState(KickState.pickupCycle);
     		}
-    		if(Robot.kicker.getLatchState() != Kicker.LatchPosition.latched)
+    	break;
+    	}
+    	case retracted:
+    	{
+    		if(Robot.oi.readyButton1.get())
+				Robot.kicker.setCharge1();
+			if(Robot.oi.readyButton2.get())
+				Robot.kicker.setCharge2();
+    		
+    	break;
+    	}
+    	case charged:
+    	{
+    		if(Robot.oi.discharge.get())
+    		{
+    			Robot.kicker.deactivateKickPistons();
+    			changeState(KickState.retracted);
+    		}
+    			
+    		if(Robot.oi.kickButton.get())
+    			new Kick().start();
+    		
+    	break;
+    	}
+    	case initCycle:
+    	{
+    		if(!flag)
+    		{
+    			Robot.kicker.setOff();
+    			flag = true;
+    		}
+    		else if(timeSinceInitialized()-time>.25)
+    		{
+    			Robot.kicker.setLatch(LatchPosition.unlatched);
+    			changeState(KickState.pickupCycle);
+    		}
+    			
+    	break;
+    	}
+    	case pickupCycle:
+    	{
+    		if(!flag)
+    		{
+    			Robot.kicker.setLatch(LatchPosition.unlatched);
+    			flag = true;
+    		}
+    		else if(timeSinceInitialized()-time>.25)
     		{
     			Robot.kicker.setRetract(true);
-    			isBeingRetracted = true;
+    			changeState(KickState.latchCycle);
     		}
-    		   		
+    	break;
     	}
-    	if(isBeingRetracted && Robot.kicker.getPosition() == Kicker.Position.retracted)
+    	case latchCycle:
     	{
-    		Robot.kicker.setRetract(false);
-    		isBeingRetracted = false;
-    		Robot.kicker.setLatch(Kicker.LatchPosition.latched);
-    	}
-    	
-    	if(Robot.oi.readyButton1.get()||Robot.oi.readyButton2.get())
-    	{
-    		
-    		if(Robot.kicker.getLatchState() == Kicker.LatchPosition.latched && Robot.kicker.getPosition() == Kicker.Position.retracted )
+    		if(!flag)
     		{
-    			if(Robot.oi.readyButton1.get())
-    				Robot.kicker.setCharge1();
-    			if(Robot.oi.readyButton2.get())
-    				Robot.kicker.setCharge2();
+    			Robot.kicker.setLatch(LatchPosition.latched);
+    			flag = true;
+    		}
+    		else if(timeSinceInitialized()-time>.25)
+    		{
+    			Robot.kicker.setRetract(false);
     		}
     		
+    	break;
     	}
     	
-    }
+    	}
+    	
+     }
 
     // Make this return true when this Command no longer needs to run execute()
     // limits retraction, tells when kicker reaches limit
     protected boolean isFinished() {
-        return Robot.oi.kickButton.get();
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Scheduler.getInstance().add(new Kick());
     }
 
     // Called when another command which requires one or more of the same

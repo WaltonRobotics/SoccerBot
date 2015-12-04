@@ -61,9 +61,10 @@ public class IntakeManual extends Command {
 			}
 			break;
 		}
-		
-		Robot.intake.setMotorPower(-Robot.oi.xbox.getLeftTrigger());
-
+		if(Robot.oi.xbox.getLeftTrigger()>.1)
+		Robot.intake.setMotorPower(-Robot.oi.xbox.getLeftTrigger()/2);
+		else if(Robot.oi.xbox.getRightTrigger()>.1)
+			Robot.intake.setMotorPower(Robot.oi.xbox.getRightTrigger());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

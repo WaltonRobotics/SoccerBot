@@ -85,7 +85,8 @@ public class RobotMap {
         intakeArmBlock = new Solenoid(0, 5);
         LiveWindow.addActuator("intake", "ArmBlock", intakeArmBlock);
         
-        intakeAngleSensor = new AnalogPotentiometer(0, 1.0, 0.0);
+        
+        intakeAngleSensor = new AnalogPotentiometer(0, 1000.0, 0.0);
         LiveWindow.addSensor("intake", "AngleSensor", intakeAngleSensor);
         
         intakeArmTalon = new CANTalon(1);
