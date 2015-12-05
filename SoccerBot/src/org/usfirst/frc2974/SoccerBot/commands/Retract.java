@@ -3,8 +3,7 @@ package org.usfirst.frc2974.SoccerBot.commands;
 import org.usfirst.frc2974.SoccerBot.Robot;
 
 import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.LatchPosition;
-
-
+import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.Position;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,15 +20,15 @@ public class Retract extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kicker.setOff();
-    	Robot.kicker.setLatch(LatchPosition.unlatched);
-    	changeState(KickState.dangling);
+    	//Robot.kicker.setLatch(LatchPosition.unlatched);
+    	changeState(KickState.initCycle);
     }
     
     // Called repeatedly when this Command is scheduled to run
     // when button (in OI) is pushed, kicker retracts 
     Double time;
     KickState state;
-    boolean flag = false;
+    boolean stateInitialized = false;
 	public enum KickState {
 		dangling, retracted, charged, initCycle, pickupCycle, latchCycle
 
@@ -37,7 +36,7 @@ public class Retract extends Command {
 	public void changeState(KickState ks)
 	{	time = timeSinceInitialized();
 		state = ks;
-		flag =false;
+		stateInitialized =false;
 	}
     protected void execute() {
     	switch(state)
@@ -53,9 +52,17 @@ public class Retract extends Command {
     	case retracted:
     	{
     		if(Robot.oi.readyButton1.get())
-				Robot.kicker.setCharge1();
+    		{
+    			Robot.kicker.setCharge1();
+    			changeState(KickState.charged);
+    		}
+				
 			if(Robot.oi.readyButton2.get())
+			{
 				Robot.kicker.setCharge2();
+				changeState(KickState.charged);
+			}
+				
     		
     	break;
     	}
@@ -68,45 +75,49 @@ public class Retract extends Command {
     		}
     			
     		if(Robot.oi.kickButton.get())
-    			new Kick().start();
+    			Robot.kicker.startKick();
     		
     	break;
     	}
     	case initCycle:
     	{
-    		if(!flag)
+    		if(!stateInitialized)
     		{
     			Robot.kicker.setOff();
-    			flag = true;
+    			stateInitialized = true;
     		}
     		else if(timeSinceInitialized()-time>.25)
     		{
     			Robot.kicker.setLatch(LatchPosition.unlatched);
-    			changeState(KickState.pickupCycle);
+    			changeState(KickState.dangling);
     		}
     			
     	break;
     	}
     	case pickupCycle:
     	{
-    		if(!flag)
+    		if(!stateInitialized)
     		{
     			Robot.kicker.setLatch(LatchPosition.unlatched);
-    			flag = true;
+    			stateInitialized = true;
     		}
     		else if(timeSinceInitialized()-time>.25)
     		{
     			Robot.kicker.setRetract(true);
-    			changeState(KickState.latchCycle);
+    			
     		}
+    		else if (Robot.kicker.getPosition()==Position.retracted) 
+    		{
+    			changeState(KickState.latchCycle);
+			}
     	break;
     	}
     	case latchCycle:
     	{
-    		if(!flag)
+    		if(!stateInitialized)
     		{
     			Robot.kicker.setLatch(LatchPosition.latched);
-    			flag = true;
+    			stateInitialized = true;
     		}
     		else if(timeSinceInitialized()-time>.25)
     		{

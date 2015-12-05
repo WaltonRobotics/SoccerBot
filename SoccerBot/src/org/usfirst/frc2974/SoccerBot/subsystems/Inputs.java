@@ -4,6 +4,7 @@ import org.usfirst.frc2974.SoccerBot.RobotMap;
 import org.usfirst.frc2974.SoccerBot.commands.ShowInputs;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,8 +26,7 @@ public class Inputs extends Subsystem {
     DigitalInput digital8 = RobotMap.digital8;
     DigitalInput digital9 = RobotMap.digital9;
     
-
-   // AnalogInput analog0 = RobotMap.analog0;
+    AnalogPotentiometer pot = RobotMap.intakeAngleSensor;
     AnalogInput analog1 = RobotMap.analog1;
     AnalogInput analog2 = RobotMap.analog2;
     AnalogInput analog3 = RobotMap.analog3;
@@ -52,11 +52,11 @@ public class Inputs extends Subsystem {
 		SmartDashboard.putData("Digital In 8", digital8);
 		SmartDashboard.putData("Digital In 9", digital9);
 
-		//SmartDashboard.putData("Analog In 0", analog0);
+		SmartDashboard.putData(" pot", pot);
 		SmartDashboard.putData("Analog In 1", analog1);
 		SmartDashboard.putData("Analog In 2", analog2);
 		SmartDashboard.putData("Analog In 3", analog3);
-		SmartDashboard.putData(" pot", RobotMap.intakeAngleSensor);
+
 		
 	}
 	

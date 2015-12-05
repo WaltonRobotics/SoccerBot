@@ -3,9 +3,9 @@
  */
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import javax.management.timer.Timer;
-
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
+
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * @author tfs

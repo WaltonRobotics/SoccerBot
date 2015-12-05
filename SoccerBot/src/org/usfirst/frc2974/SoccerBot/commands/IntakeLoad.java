@@ -2,7 +2,7 @@ package org.usfirst.frc2974.SoccerBot.commands;
 
 import org.usfirst.frc2974.SoccerBot.Robot;
 import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.subsystems.Intake.ArmMovement;
+import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Command;

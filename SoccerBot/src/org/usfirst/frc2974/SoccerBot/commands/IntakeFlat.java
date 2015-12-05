@@ -2,7 +2,7 @@ package org.usfirst.frc2974.SoccerBot.commands;
 
 import org.usfirst.frc2974.SoccerBot.Robot;
 import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
-import org.usfirst.frc2974.SoccerBot.subsystems.Intake.ArmMovement;
+import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -34,7 +34,7 @@ public class IntakeFlat extends Command {
         return isFinishedFlat;
     }
     
-    protected void endFlat() {
+    public void endFlat() {
     	isFinishedFlat = true; 
     }
 

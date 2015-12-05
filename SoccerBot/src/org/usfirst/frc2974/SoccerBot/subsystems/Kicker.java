@@ -25,10 +25,11 @@ public class Kicker extends Subsystem {
 	//private kickState state;
 
 	// KickPosition action;
-
+	private Kick kickCommand = new Kick();
+	
 	public void initDefaultCommand() {
 
-		// setDefaultCommand(new Retract());
+		setDefaultCommand(new Retract());
 		// retract();
 		// action = KickPosition.retract;
 
@@ -42,7 +43,9 @@ public class Kicker extends Subsystem {
 		retract.set(bool);
 	}
 
-	
+	public void startKick() {
+		kickCommand.start();
+	}
 	
 	public void setLatch(LatchPosition lp) {
 		switch (lp) {

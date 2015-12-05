@@ -57,7 +57,7 @@ abstract public class AbstractIntake extends Subsystem {
     }
     
     public void startFlat() {
-    	flatCommand.start()
+    	flatCommand.start();
     }
     
     public void endFlat() {
