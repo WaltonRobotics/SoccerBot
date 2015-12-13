@@ -36,29 +36,32 @@ public class IntakeManual extends Command {
 	 */
 	protected void execute() { 
 
-		if(Robot.oi.dribble.get())
+		if(Robot.oi.dribbleButton.get())
 			new IntakeDribble().start();
 		
 		if(Robot.oi.loadButton.get())
+			new IntakeLoad().start();
+		
+		if(Robot.oi.flatButton.get())
 			new IntakeLoad().start();
 		
 		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
 
 		switch (Robot.intake.getAction()) {
-		// if not pressed and in up- do nothing
+		// if not pressed, block
 		case up:
 			if (!isUpPressed) {
 				Robot.intake.setArmMovement(Intake.ArmMovement.block);
 			}
 			break;
-		// if pressed and in fall - do nothing
+		// if not pressed, block
 		case fall:
 			if (!isFallPressed) {
 				Robot.intake.setArmMovement(Intake.ArmMovement.block);
 			}
 			break;
-		// if pressed and in fall, go up
+		// if pressed and in block, go up or down
 		case block:
 			if (isUpPressed) {
 				Robot.intake.setArmMovement(Intake.ArmMovement.up);
@@ -67,10 +70,13 @@ public class IntakeManual extends Command {
 			}
 			break;
 		}
+		
 		if(Robot.oi.xbox.getLeftTrigger()>.01)
 		Robot.intake.setMotorPower(-.35);
+		
 		else if(Robot.oi.xbox.getRightTrigger()>.01)
 			Robot.intake.setMotorPower(Robot.oi.xbox.getRightTrigger());
+		
 		else
 			Robot.intake.setMotorPower(0);
 	}

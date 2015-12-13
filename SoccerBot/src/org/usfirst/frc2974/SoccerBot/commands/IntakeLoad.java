@@ -23,13 +23,14 @@ public class IntakeLoad extends Command {
     protected void initialize() {
     	SmartDashboard.putNumber("angleLoad", 700);
     	SmartDashboard.putNumber("offsetLoad", 10);
+    	SmartDashboard.putNumber("motorspeed", -.35);
     }
 
     // Called repeatedly when this Command is scheduled to run
     //controls the angle and offset of loading arm
     protected void execute() {
-    	SmartDashboard.putNumber("analog pot",angleSensor.get());
-    	Robot.intake.setMotorPower(-.35);
+    	Robot.intake.setMotorPower(SmartDashboard.getNumber("motorspeed"));
+    	
     	if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetLoad"))>SmartDashboard.getNumber("angleLoad"))
     	{
     		Robot.intake.setArmMovement(ArmMovement.fall);
@@ -38,11 +39,24 @@ public class IntakeLoad extends Command {
     	{
     		Robot.intake.setArmMovement(ArmMovement.up);
     	}
+    	
+    	if(Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S))
+    	{
+    		new IntakeManual().start();
+    	}
+    	if(Robot.oi.dribbleButton.get())
+    	{
+    		new IntakeDribble().start();
+    	}
+    	if(Robot.oi.flatButton.get())
+    	{
+    		new IntakeFlat().start();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S);
+        return false;
     }
 
     // Called once after isFinished returns true

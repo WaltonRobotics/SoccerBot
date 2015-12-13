@@ -29,8 +29,8 @@ public class IntakeDribble extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("analog pot",angleSensor.get());
     	Robot.intake.setMotorPower(SmartDashboard.getNumber("motorSpeed"));
+    	
     	if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetDribble"))>SmartDashboard.getNumber("angleDribble"))
     	{
     		Robot.intake.setArmMovement(ArmMovement.fall);
@@ -39,11 +39,24 @@ public class IntakeDribble extends Command {
     	{
     		Robot.intake.setArmMovement(ArmMovement.up);
     	}
+    	
+    	if(Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S))
+    	{
+    		new IntakeManual().start();
+    	}
+    	if(Robot.oi.loadButton.get())
+    	{
+    		new IntakeLoad().start();
+    	}
+    	if(Robot.oi.flatButton.get())
+    	{
+    		new IntakeFlat().start();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S);
+    	return false;
     }
 
     // Called once after isFinished returns true
