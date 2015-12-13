@@ -3,12 +3,10 @@
  */
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
-
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * @author tfs
+ * controls intake solenoids without a rea potentiometer
  *
  */
 public class IntakeNoPotentiometer extends AbstractIntake {

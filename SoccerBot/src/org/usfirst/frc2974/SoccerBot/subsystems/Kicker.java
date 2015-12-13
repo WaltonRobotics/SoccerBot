@@ -6,7 +6,6 @@ import org.usfirst.frc2974.SoccerBot.commands.Retract;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,21 +19,22 @@ public class Kicker extends Subsystem {
 	private final Solenoid latch = RobotMap.latch;
 	private final DigitalInput limitSwitchForward = RobotMap.limitSwitchForward;
 	private final DigitalInput limitSwitchBackward = RobotMap.limitSwitchBackward;
-	//private double time;
+	
 	LatchPosition latchPosition;
-	//private kickState state;
-
-	// KickPosition action;
-	private Kick kickCommand = new Kick();
+	//private Kick kickCommand = new Kick();
 	
 	public void initDefaultCommand() {
-
 		setDefaultCommand(new Retract());
-		// retract();
-		// action = KickPosition.retract;
-
+	}
+	
+	public enum LatchPosition {
+		latched, unlatched
 	}
 
+	public enum Position {
+		extended, retracted, dontKnow
+	}
+	
 	public void setRetract(boolean bool) {
 		if (bool) {
 			kickerLeft.set(false);
@@ -44,7 +44,7 @@ public class Kicker extends Subsystem {
 	}
 
 	public void startKick() {
-		kickCommand.start();
+		new Kick().start();
 	}
 	
 	public void setLatch(LatchPosition lp) {
@@ -58,10 +58,6 @@ public class Kicker extends Subsystem {
 			latchPosition = LatchPosition.unlatched;
 			break;
 		}
-	}
-
-	public enum LatchPosition {
-		latched, unlatched
 	}
 
 	public void setOff() {
@@ -86,91 +82,20 @@ public class Kicker extends Subsystem {
 	}
 
 	public LatchPosition getLatchState() {
-//		if (latchPosition == LatchPosition.latched) {
-//			if (time >= .25)
-//				return LatchPosition.latched;
-//			else
-//				return LatchPosition.waiting;
-//		} else {
-//			return LatchPosition.unlatched;
-//		}
 		return latchPosition;
-
 	}
 
 	public Position getPosition() {
-		if (!limitSwitchForward.get()) {
+		if (!limitSwitchForward.get()) 
 			return Position.extended;
-
-		}
-
-		if (!limitSwitchBackward.get()) {
+		
+		if (!limitSwitchBackward.get()) 
 			return Position.retracted;
-
-		} else {
-			return Position.dontKnow;
-		}
+			
+		return Position.dontKnow;
+		
 	}
 
-	public enum Position {
-		extended, retracted, dontKnow
-	}
 
-	// public enum KickPosition
-	// {
-	// shoot, ready, retract
-	// }
-	//
-	// public void retract()
-	// {
-	// if(!latch.get())
-	// latch.set(true);
-	// if(kickerLeft.get())
-	// kickerLeft.set(false);
-	// if(kickerRight.get())
-	// kickerRight.set(false);
-	// if(!retract.get())
-	// retract.set(true);
-	//
-	// try {
-	// wait(250);
-	// } catch (InterruptedException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// latch.set(false);
-	//
-	// try {
-	// wait(250);
-	// } catch (InterruptedException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// retract.set(false);
-	// action = KickPosition.retract;
-	// }
-	//
-	// public void getReady(int num)
-	// {
-	// if(action!= KickPosition.retract)
-	// retract();
-	// if(!kickerLeft.get())
-	// kickerLeft.set(true);
-	// if(kickerRight.get()!=(num==2))
-	// kickerRight.set(num == 2);
-	//
-	// action = KickPosition.ready;
-	// }
-	//
-	// public void kick()
-	// {
-	// if(action!= KickPosition.ready)
-	// getReady(1);
-	//
-	// latch.set(true);
-	//
-	// }
 
 }

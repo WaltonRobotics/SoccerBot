@@ -1,5 +1,6 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
+import org.usfirst.frc2974.SoccerBot.Gamepad.POV;
 import org.usfirst.frc2974.SoccerBot.Robot;
 import org.usfirst.frc2974.SoccerBot.RobotMap;
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
@@ -20,28 +21,28 @@ public class IntakeLoad extends Command {
     // Called just before this Command runs the first time
     //sets the required and acceptable angles of loader
     protected void initialize() {
-    	SmartDashboard.putNumber("angle", 0);
-    	SmartDashboard.putNumber("offset", .01);
+    	SmartDashboard.putNumber("angleLoad", 700);
+    	SmartDashboard.putNumber("offsetLoad", 10);
     }
 
     // Called repeatedly when this Command is scheduled to run
     //controls the angle and offset of loading arm
     protected void execute() {
     	SmartDashboard.putNumber("analog pot",angleSensor.get());
-    	Robot.intake.setMotorPower(1);
-    	if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offset"))>SmartDashboard.getNumber("angle"))
-    	{
-    		Robot.intake.setArmMovement(ArmMovement.up);
-    	}
-    	else if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offset"))<SmartDashboard.getNumber("angle"))
+    	Robot.intake.setMotorPower(-.35);
+    	if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetLoad"))>SmartDashboard.getNumber("angleLoad"))
     	{
     		Robot.intake.setArmMovement(ArmMovement.fall);
+    	}
+    	else if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetLoad"))<SmartDashboard.getNumber("angleLoad"))
+    	{
+    		Robot.intake.setArmMovement(ArmMovement.up);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S);
     }
 
     // Called once after isFinished returns true

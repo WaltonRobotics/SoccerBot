@@ -41,7 +41,7 @@ public class Drive extends Command {
     protected void execute() {
     	double left = Robot.oi.xbox.getLeftY();
     	double right = Robot.oi.xbox.getRightY();
-    	Robot.driveTrain.setSpeeds(left, right);
+    	Robot.driveTrain.setSpeeds(Math.abs(left)>.05?left:0, Math.abs(right)>.05?right:0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -36,6 +36,12 @@ public class IntakeManual extends Command {
 	 */
 	protected void execute() { 
 
+		if(Robot.oi.dribble.get())
+			new IntakeDribble().start();
+		
+		if(Robot.oi.loadButton.get())
+			new IntakeLoad().start();
+		
 		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
 
@@ -61,33 +67,25 @@ public class IntakeManual extends Command {
 			}
 			break;
 		}
-		if(Robot.oi.xbox.getLeftTrigger()>.1)
-		Robot.intake.setMotorPower(-Robot.oi.xbox.getLeftTrigger()/2);
-		else if(Robot.oi.xbox.getRightTrigger()>.1)
+		if(Robot.oi.xbox.getLeftTrigger()>.01)
+		Robot.intake.setMotorPower(-.35);
+		else if(Robot.oi.xbox.getRightTrigger()>.01)
 			Robot.intake.setMotorPower(Robot.oi.xbox.getRightTrigger());
+		else
+			Robot.intake.setMotorPower(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	/**
-	 * Make this return true when this Command no longer needs to run execute()
-	 */
 	protected boolean isFinished() {
 		return false;
 	}
 
 	// Called once after isFinished returns true
-	/**
-	 * Called once after isFinished returns true
-	 */
 	protected void end() {
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
-	/**
-	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
-	 */
 	protected void interrupted() {
 	}
 }

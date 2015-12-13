@@ -34,9 +34,7 @@ public class Inputs extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ShowInputs());
-		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new ShowInputs());	
 	}
 	
 	public void updateSmartDashboard()
