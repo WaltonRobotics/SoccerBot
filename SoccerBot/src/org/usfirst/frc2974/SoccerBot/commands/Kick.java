@@ -21,10 +21,11 @@ public class Kick extends Command {
 	State state;
 	boolean isFinishedFlag;
 	double timeSinceFlat;
+	final private double timeout = 3;
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		state = State.notFlat;
+		state = State.notInitialized;
 	}
 	private enum State
 	{
@@ -50,7 +51,7 @@ public class Kick extends Command {
 			break;
 		case flat:
 			Robot.kicker.setLatch(Kicker.LatchPosition.unlatched);
-			if(Robot.kicker.getPosition() == Kicker.Position.extended || timeSinceInitialized()-timeSinceFlat> 8)
+			if(Robot.kicker.getPosition() == Kicker.Position.extended || timeSinceInitialized()-timeSinceFlat> timeout)
 				state = State.finished;
 
 		}

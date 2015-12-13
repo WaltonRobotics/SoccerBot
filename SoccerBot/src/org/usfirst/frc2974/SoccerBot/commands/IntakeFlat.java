@@ -18,13 +18,13 @@ public class IntakeFlat extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
        	Robot.intake.setMotorPower(0);
-    	Robot.intake.setArmMovement(Intake.ArmMovement.fall);
+       	   	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//todo display value on smartdashbord to show how much the arm has fallen
-    	
+    	Robot.intake.setArmMovement(Intake.ArmMovement.fall);
     	if(Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S))
     	{
     		new IntakeManual().start();

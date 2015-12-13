@@ -6,6 +6,7 @@ import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.LatchPosition;
 import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.Position;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -30,13 +31,14 @@ public class Retract extends Command {
     KickState state;
     boolean stateInitialized = false;
 	public enum KickState {
-		dangling, retracted, charged, initCycle, pickupCycle, latchCycle
+		dangling, retracted, charged, initCycle, pickupCycle, latchCycle, waitForRetract
 
 	}
 	public void changeState(KickState ks)
 	{	time = timeSinceInitialized();
 		state = ks;
 		stateInitialized =false;
+		SmartDashboard.putString("kick state", ks.toString());
 	}
     protected void execute() {
     	switch(state)
@@ -104,12 +106,17 @@ public class Retract extends Command {
     		else if(timeSinceInitialized()-time>.25)
     		{
     			Robot.kicker.setRetract(true);
-    			
+    			changeState(KickState.waitForRetract);
     		}
-    		else if (Robot.kicker.getPosition()==Position.retracted) 
+    	break;
+    	}
+    	case waitForRetract:
+    	{
+    		if (Robot.kicker.getPosition()==Position.retracted || Robot.oi.retractButton.get()) 
     		{
     			changeState(KickState.latchCycle);
-			}
+    		}//todo timeout- go back to dangling?
+    	
     	break;
     	}
     	case latchCycle:
@@ -122,6 +129,7 @@ public class Retract extends Command {
     		else if(timeSinceInitialized()-time>.25)
     		{
     			Robot.kicker.setRetract(false);
+    			changeState(KickState.retracted);
     		}
     		
     	break;

@@ -27,10 +27,10 @@ public class Intake extends AbstractIntake {
 
 	//enumerates the two cases used later; up, and fall
 	private final double transitionUpHigh = 840; //todo to be tuned 
-	private final double transitionHighDribble = 700;
-	private final double transitionDribbleLow = 800;
+	private double transitionHighDribble = 660;
+	private double transitionDribbleLow = 620;
 	private final double transitionLowFlat = 610;
-	
+
     private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
       
     public ArmPosition getArmPosition()
@@ -49,6 +49,18 @@ public class Intake extends AbstractIntake {
     		return ArmPosition.low;
     	}
     	return ArmPosition.flat;
+    }
+    
+    public void setDribbleMode()
+    {
+    	transitionHighDribble = 660;
+    	transitionDribbleLow = 620;
+    }
+    
+    public void setLoadMOde()
+    {
+    	transitionHighDribble = 700;
+    	transitionDribbleLow = 660;
     }
 }
 

@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc2974.SoccerBot.commands.*;
 import org.usfirst.frc2974.SoccerBot.subsystems.*;
 
@@ -72,6 +74,7 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		inputs.updateSmartDashboard();
 	}
 
 	public void autonomousInit() {
@@ -94,6 +97,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		SmartDashboard.putString("current intake command", intake.getCurrentCommand().toString());
 	}
 
 	/**

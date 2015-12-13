@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -70,6 +71,7 @@ abstract public class AbstractIntake extends Subsystem {
     		break;    		
     	}
     	action = move;
+    	SmartDashboard.putString("arm movement", action.toString());
     }  
     
     public ArmMovement getAction()

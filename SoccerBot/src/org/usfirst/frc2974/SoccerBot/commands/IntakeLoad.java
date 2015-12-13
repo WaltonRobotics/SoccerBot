@@ -24,6 +24,7 @@ public class IntakeLoad extends Command {
     	SmartDashboard.putNumber("angleLoad", 700);
     	SmartDashboard.putNumber("offsetLoad", 10);
     	SmartDashboard.putNumber("motorspeed", -.35);
+    	Robot.intake.setLoadMOde();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,14 +32,23 @@ public class IntakeLoad extends Command {
     protected void execute() {
     	Robot.intake.setMotorPower(SmartDashboard.getNumber("motorspeed"));
     	
-    	if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetLoad"))>SmartDashboard.getNumber("angleLoad"))
-    	{
-    		Robot.intake.setArmMovement(ArmMovement.fall);
-    	}
-    	else if(Math.abs(angleSensor.get()-SmartDashboard.getNumber("offsetLoad"))<SmartDashboard.getNumber("angleLoad"))
-    	{
-    		Robot.intake.setArmMovement(ArmMovement.up);
-    	}
+    	switch (Robot.intake.getArmPosition()) {
+		case up:
+		case high: {
+			Robot.intake.setArmMovement(ArmMovement.fall);
+			break;
+		}
+		case low:
+		case flat: {
+			Robot.intake.setArmMovement(ArmMovement.up);
+			break;
+		}
+		case dribble: {
+			Robot.intake.setArmMovement(ArmMovement.block);
+			break;
+		}
+		}
+
     	
     	if(Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S))
     	{
