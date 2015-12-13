@@ -37,8 +37,8 @@ public class RobotMap {
     public static SpeedController driveTrainBackR;
     
     //intake
-    public static Solenoid intakeArmSolenoid;
-    public static Solenoid intakeArmBlock; 
+    public static Solenoid intakeArmExtend;
+    public static Solenoid intakeArmRetract; 
     public static AnalogPotentiometer intakeAngleSensor;
     public static CANTalon intakeArmTalon;
     
@@ -85,11 +85,11 @@ public class RobotMap {
         driveTrainBackR = new Talon(0);
         LiveWindow.addActuator("DriveTrain", "Speed Controller Back Right", (Talon) driveTrainBackR);
         
-        intakeArmSolenoid = new Solenoid(0, 4);
-        LiveWindow.addActuator("intake", "ArmSolenoid", intakeArmSolenoid);
+        intakeArmExtend = new Solenoid(0, 5);
+        LiveWindow.addActuator("intake", "ArmSolenoid", intakeArmExtend);
         
-        intakeArmBlock = new Solenoid(0, 5);
-        LiveWindow.addActuator("intake", "ArmBlock", intakeArmBlock);
+        intakeArmRetract = new Solenoid(0, 4);
+        LiveWindow.addActuator("intake", "ArmBlock", intakeArmRetract);
         
         limitSwitchForward = new DigitalInput(0);
         LiveWindow.addSensor("kicker","forward limitswitch", limitSwitchForward);

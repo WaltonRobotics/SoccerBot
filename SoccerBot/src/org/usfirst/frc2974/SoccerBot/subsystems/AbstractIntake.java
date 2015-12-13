@@ -35,9 +35,9 @@ abstract public class AbstractIntake extends Subsystem {
 	protected ArmMovement action;
     //protected IntakeFlat flatCommand = new IntakeFlat(); 
 	
-    protected final Solenoid armSolenoid = RobotMap.intakeArmSolenoid;
+    protected final Solenoid extend = RobotMap.intakeArmExtend;
     protected final CANTalon armTalon = RobotMap.intakeArmTalon;
-    protected final Solenoid armBlock = RobotMap.intakeArmBlock;
+    protected final Solenoid retract = RobotMap.intakeArmRetract;
 
     
     public void initDefaultCommand() {
@@ -56,17 +56,17 @@ abstract public class AbstractIntake extends Subsystem {
     public void setArmMovement(ArmMovement move)
     {	
     	switch(move){
-    	case up:
-    		armSolenoid.set(true);
-    		armBlock.set(false);
-    		break;
     	case fall:
-    		armSolenoid.set(false);
-    		armBlock.set(false);
+    		extend.set(true);
+    		retract.set(false);
+    		break;
+    	case up:
+    		extend.set(false);
+    		retract.set(true);
     		break;
     	case block:
-    		armSolenoid.set(true);
-    	    armBlock.set(true);
+    		extend.set(false);
+    	    retract.set(false);
     		break;    		
     	}
     	action = move;
