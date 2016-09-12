@@ -11,8 +11,7 @@
 
 package org.usfirst.frc2974.SoccerBot;
 
-import org.usfirst.frc2974.SoccerBot.commands.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
