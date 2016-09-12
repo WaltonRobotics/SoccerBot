@@ -86,12 +86,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
 		SmartDashboard.putString("current intake command", intake.getCurrentCommand().toString());
 	}
 
