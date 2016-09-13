@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Kick extends Command {
 //TODO add enum 2 states
 	public Kick() {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.kicker);
 	}
 	State state;
