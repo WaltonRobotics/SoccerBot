@@ -12,9 +12,11 @@
 package org.usfirst.frc2974.SoccerBot;
 
 import edu.wpi.first.wpilibj.Talon;
+
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;

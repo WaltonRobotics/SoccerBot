@@ -13,7 +13,9 @@ package org.usfirst.frc2974.SoccerBot.subsystems;
 
 import org.usfirst.frc2974.SoccerBot.RobotMap;
 import org.usfirst.frc2974.SoccerBot.commands.*;
-import edu.wpi.first.wpilibj.CANTalon;
+
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Solenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;

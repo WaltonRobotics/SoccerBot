@@ -49,9 +49,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		//code to make camera work
-		server = CameraServer.getInstance();
-        server.setQuality(50);
-        server.startAutomaticCapture("cam0");
+//		server = CameraServer.getInstance();
+//        server.setQuality(50);
+//        server.startAutomaticCapture("cam0");
 	}
 
 	/**
@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		SmartDashboard.putString("current intake command", intake.getCurrentCommand().toString());
+		SmartDashboard.putData("Enable Charging", NewKickSequence.enableCharging());
 	}
 
 	/**

@@ -2,6 +2,7 @@ package org.usfirst.frc2974.SoccerBot.subsystems;
 
 import org.usfirst.frc2974.SoccerBot.RobotMap;
 import org.usfirst.frc2974.SoccerBot.commands.Kick;
+import org.usfirst.frc2974.SoccerBot.commands.NewKickSequence;
 import org.usfirst.frc2974.SoccerBot.commands.Retract;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,7 +25,7 @@ public class Kicker extends Subsystem {
 	//private Kick kickCommand = new Kick();
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new Retract());
+		setDefaultCommand(new NewKickSequence());
 	}
 	
 	public enum LatchPosition {
@@ -43,6 +44,7 @@ public class Kicker extends Subsystem {
 		retract.set(bool);
 	}
 
+	@Deprecated
 	public void startKick() {
 		new Kick().start();
 	}

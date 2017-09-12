@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+@Deprecated
 public class Kick extends Command {
 //TODO add enum 2 states
 	public Kick() {

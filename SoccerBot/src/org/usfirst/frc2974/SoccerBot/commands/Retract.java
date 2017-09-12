@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *when retract button is pressed, kicker retracts
  */
+@Deprecated
 public class Retract extends Command {
 
     public Retract() {
@@ -53,17 +54,17 @@ public class Retract extends Command {
     	}
     	case retracted:
     	{
-    		if(Robot.oi.readyButton1.get())
-    		{
-    			Robot.kicker.setCharge1();
-    			changeState(KickState.charged);
-    		}
-				
-			if(Robot.oi.readyButton2.get())
-			{
-				Robot.kicker.setCharge2();
-				changeState(KickState.charged);
-			}
+//    		if(Robot.oi.readyButton1.get())
+//    		{
+//    			Robot.kicker.setCharge1();
+//    			changeState(KickState.charged);
+//    		}
+//				
+//			if(Robot.oi.readyButton2.get())
+//			{
+//				Robot.kicker.setCharge2();
+//				changeState(KickState.charged);
+//			}
 				
     		
     	break;
@@ -112,7 +113,7 @@ public class Retract extends Command {
     	}
     	case waitForRetract:
     	{
-    		if (Robot.kicker.getPosition()==Position.retracted || Robot.oi.retractButton.get()) 
+    		if (Robot.kicker.getPosition()==Position.retracted /*|| Robot.oi.retractButton.get()*/) 
     		{
     			changeState(KickState.latchCycle);
     		}//todo timeout- go back to dangling?
