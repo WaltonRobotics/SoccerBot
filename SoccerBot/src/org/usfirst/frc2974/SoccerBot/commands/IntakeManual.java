@@ -36,14 +36,14 @@ public class IntakeManual extends Command {
 	 */
 	protected void execute() { 
 
-		if(Robot.oi.dribbleButton.get())
-			new IntakeDribble().start();
-		
-		if(Robot.oi.loadButton.get())
-			new IntakeLoad().start();
+//		if(Robot.oi.dribbleButton.get())
+//			new IntakeDribble().start();
+//		
+//		if(Robot.oi.loadButton.get())
+//			new IntakeLoad().start();
 		
 		if(Robot.oi.flatButton.get())
-			new IntakeLoad().start();
+			new IntakeFlat().start();
 		
 		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);

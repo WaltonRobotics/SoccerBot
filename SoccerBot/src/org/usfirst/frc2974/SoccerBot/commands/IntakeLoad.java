@@ -54,10 +54,10 @@ public class IntakeLoad extends Command {
     	{
     		new IntakeManual().start();
     	}
-    	if(Robot.oi.dribbleButton.get())
-    	{
-    		new IntakeDribble().start();
-    	}
+//    	if(Robot.oi.dribbleButton.get())
+//    	{
+//    		new IntakeDribble().start();
+//    	}
     	if(Robot.oi.flatButton.get())
     	{
     		new IntakeFlat().start();

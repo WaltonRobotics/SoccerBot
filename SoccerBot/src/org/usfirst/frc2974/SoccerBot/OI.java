@@ -57,8 +57,8 @@ public class OI {
 //    public Button readyButton1;
 //    public Button readyButton2;
 //    public Button retractButton;
-    public Button dribbleButton;
-    public Button loadButton;
+//    public Button dribbleButton;
+//    public Button loadButton;
     public Button flatButton;
     public Button discharge;
     public Button chargeSwitch;
@@ -75,9 +75,9 @@ public class OI {
 //        readyButton1 = new JoystickButton(xbox,2);
 //        readyButton2 = new JoystickButton(xbox,3);
 //        retractButton = new JoystickButton(xbox,4);
-        dribbleButton = new JoystickButton(xbox,8);
-        loadButton = new JoystickButton(xbox, 5);
-        flatButton = new JoystickButton(xbox, 6);
+//        dribbleButton = new JoystickButton(xbox,8);
+//        loadButton = new JoystickButton(xbox, 5);
+        flatButton = new JoystickButton(xbox, 3);
         discharge = new JoystickButton(xbox, 9);
         chargeSwitch = new JoystickButton(xbox, 10);
         

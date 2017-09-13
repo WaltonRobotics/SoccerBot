@@ -69,14 +69,13 @@ public class NewKickSequence extends Command {
 			@Override
 			public void init(NewKickSequence nks) {
 				Robot.intake.startFlat();
+				timeSinceFlat = nks.getTime();
 			}
 
 			@Override
 			public State run(NewKickSequence nks) {
-				if (Robot.intake.getArmPosition() == ArmPosition.flat) {
-					timeSinceFlat = nks.getTime();
-				}
-				if (Robot.kicker.getPosition() == Kicker.Position.extended || nks.getTime() - timeSinceFlat > TIMEOUT) {
+				if (nks.getTime() - timeSinceFlat > 5 /*|| nks.getTime() - timeSinceFlat > TIMEOUT*/) {
+					Robot.kicker.setLatch(Kicker.LatchPosition.unlatched);
 					return RESTING;
 				}
 				return this;
@@ -99,9 +98,8 @@ public class NewKickSequence extends Command {
 		disabledCharging = true;
 	}
 
-	public static Sendable enableCharging() {
+	public static void enableCharging() {
 		disabledCharging = false;
-		return null;
 	}
 
 	public void chargeSwitch() {
@@ -134,6 +132,7 @@ public class NewKickSequence extends Command {
 		}
 		SmartDashboard.putBoolean("disabledCharging", disabledCharging);
 		SmartDashboard.putString("Kicker state", state.toString());
+		SmartDashboard.putString("Intake position", Robot.intake.getArmPosition().toString());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		SmartDashboard.putString("current intake command", intake.getCurrentCommand().toString());
-		SmartDashboard.putData("Enable Charging", NewKickSequence.enableCharging());
+		//SmartDashboard.putData("Enable Charging", NewKickSequence.enableCharging());
 	}
 
 	/**

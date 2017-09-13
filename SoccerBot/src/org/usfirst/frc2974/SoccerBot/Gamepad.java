@@ -49,7 +49,7 @@ public class Gamepad extends Joystick
 	public double getRightX( )
 	{
 
-		return getRawAxis(4);
+		return getRawAxis(3);
 	}
 
 
@@ -60,7 +60,7 @@ public class Gamepad extends Joystick
 	public double getRightY( )
 	{
 
-		return getRawAxis(5);
+		return getRawAxis(2);
 	}
 
 

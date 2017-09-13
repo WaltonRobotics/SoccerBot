@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -25,16 +26,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Intake extends AbstractIntake {
 
 	//enumerates the two cases used later; up, and fall
-	private final double transitionUpHigh = 840; //todo to be tuned 
-	private double transitionHighDribble = 660;
-	private double transitionDribbleLow = 620;
-	private final double transitionLowFlat = 610;
+	private final double transitionUpHigh = 60; //todo to be tuned 
+	private double transitionHighDribble = 50;
+	private double transitionDribbleLow = 40;
+	private final double transitionLowFlat = 30;
 
     private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
       
     public ArmPosition getArmPosition()
     {
     	double position = angleSensor.get();
+    	SmartDashboard.putNumber("Ange sensor", position);
     	if(position > transitionUpHigh){
     		return ArmPosition.up;	
     	}

@@ -29,14 +29,14 @@ public class IntakeFlat extends Command {
     	{
     		new IntakeManual().start();
     	}
-    	if(Robot.oi.dribbleButton.get())
-    	{
-    		new IntakeDribble().start();
-    	}
-    	if(Robot.oi.loadButton.get())
-    	{
-    		new IntakeLoad().start();
-    	}
+//    	if(Robot.oi.dribbleButton.get())
+//    	{
+//    		new IntakeDribble().start();
+//    	}
+//    	if(Robot.oi.loadButton.get())
+//    	{
+//    		new IntakeLoad().start();
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

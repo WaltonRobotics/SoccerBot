@@ -51,9 +51,9 @@ public class IntakeDribble extends Command {
 		if (Robot.oi.xbox.getPOVButton(POV.N) || Robot.oi.xbox.getPOVButton(POV.S)) {
 			new IntakeManual().start();
 		}
-		if (Robot.oi.loadButton.get()) {
-			new IntakeLoad().start();
-		}
+//		if (Robot.oi.loadButton.get()) {
+//			new IntakeLoad().start();
+//		}
 		if (Robot.oi.flatButton.get()) {
 			new IntakeFlat().start();
 		}
