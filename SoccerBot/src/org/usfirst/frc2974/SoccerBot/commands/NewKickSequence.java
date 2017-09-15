@@ -26,8 +26,10 @@ public class NewKickSequence extends Command {
 		RESTING {
 			@Override
 			public void init(NewKickSequence nks) {
-				Robot.kicker.setLatch(LatchPosition.unlatched);
 				Robot.kicker.setRetract(true);
+				if(Robot.kicker.getPosition() != Position.retracted) {
+					Robot.kicker.setLatch(LatchPosition.unlatched);
+				}
 			}
 
 			@Override
