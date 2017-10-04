@@ -7,6 +7,7 @@ import org.usfirst.frc2974.SoccerBot.commands.Retract;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,14 +21,17 @@ public class Kicker extends Subsystem {
 	private final Solenoid latch = RobotMap.latch;
 	private final DigitalInput limitSwitchForward = RobotMap.limitSwitchForward;
 	private final DigitalInput limitSwitchBackward = RobotMap.limitSwitchBackward;
-	
+	private boolean fullCharge = true;
+	private boolean willCharge = true;
+	private double timer;
+
 	LatchPosition latchPosition;
-	//private Kick kickCommand = new Kick();
-	
+	// private Kick kickCommand = new Kick();
+
 	public void initDefaultCommand() {
 		setDefaultCommand(new NewKickSequence());
 	}
-	
+
 	public enum LatchPosition {
 		latched, unlatched
 	}
@@ -35,7 +39,7 @@ public class Kicker extends Subsystem {
 	public enum Position {
 		extended, retracted, dontKnow
 	}
-	
+
 	public void setRetract(boolean bool) {
 		if (bool) {
 			kickerLeft.set(false);
@@ -48,7 +52,7 @@ public class Kicker extends Subsystem {
 	public void startKick() {
 		new Kick().start();
 	}
-	
+
 	public void setLatch(LatchPosition lp) {
 		switch (lp) {
 		case latched:
@@ -78,6 +82,17 @@ public class Kicker extends Subsystem {
 		kickerRight.set(true);
 	}
 
+	public void startCharge() {
+		if (fullCharge) {
+			kickerLeft.set(true);
+			kickerRight.set(true);
+		} else {
+			kickerLeft.set(true);
+			kickerRight.set(false);
+		}
+
+	}
+
 	public void deactivateKickPistons() {
 		kickerLeft.set(false);
 		kickerRight.set(false);
@@ -88,16 +103,29 @@ public class Kicker extends Subsystem {
 	}
 
 	public Position getPosition() {
-		if (!limitSwitchForward.get()) 
+		if (!limitSwitchForward.get())
 			return Position.extended;
-		
-		if (!limitSwitchBackward.get()) 
+
+		if (!limitSwitchBackward.get())
 			return Position.retracted;
-			
+
 		return Position.dontKnow;
-		
+
 	}
 
+	public void setCharge(boolean charge) {
+		fullCharge = charge;
+	}
 
+	public boolean getCharge() {
+		return fullCharge;
+	}
+
+	public void startTimer() {
+		timer = Timer.getFPGATimestamp();
+	}
+	public double getTimeSinceStart() {
+		return Timer.getFPGATimestamp() - timer;
+	}
 
 }

@@ -24,7 +24,7 @@ public class IntakeDribble extends Command {
 		SmartDashboard.putNumber("angleDribble", 700);
 		SmartDashboard.putNumber("offsetDribble", 10);
 		SmartDashboard.putNumber("motorSpeed", .3);
-		Robot.intake.setDribbleMode();
+//		Robot.intake.setDribbleMode();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

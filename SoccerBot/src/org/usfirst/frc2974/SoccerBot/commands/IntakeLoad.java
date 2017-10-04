@@ -24,7 +24,7 @@ public class IntakeLoad extends Command {
     	SmartDashboard.putNumber("angleLoad", 700);
     	SmartDashboard.putNumber("offsetLoad", 10);
     	SmartDashboard.putNumber("motorspeed", -.35);
-    	Robot.intake.setLoadMOde();
+//    	Robot.intake.setLoadMOde();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -99,7 +99,7 @@ public class RobotMap {
         limitSwitchBackward = new DigitalInput(1);
         LiveWindow.addSensor("kicker","backward limitswitch", limitSwitchBackward);
         
-        intakeAngleSensor = new AnalogPotentiometer(0, 1000000, 0.0);
+        intakeAngleSensor = new AnalogPotentiometer(0, 360, 0.0);
         LiveWindow.addSensor("intake", "AngleSensor", intakeAngleSensor);
         
         intakeArmTalon = new CANTalon(1);

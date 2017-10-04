@@ -15,68 +15,109 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class NewKickSequence extends Command {
 
-	private static boolean fullCharge = true;
-	private static boolean disabledCharging = false;
-	private static double timeSinceFlat = 0;
 	final private static double TIMEOUT = 3;
 
 	private State state;
 
 	public enum State {
-		RESTING {
+		INIT {
 			@Override
 			public void init(NewKickSequence nks) {
+				Robot.kicker.deactivateKickPistons();
 				Robot.kicker.setLatch(LatchPosition.unlatched);
 				Robot.kicker.setRetract(true);
 			}
 
 			@Override
 			public State run(NewKickSequence nks) {
-				if (Robot.kicker.getPosition() == Position.retracted) {
-					Robot.kicker.setLatch(LatchPosition.latched);
-					Robot.kicker.setRetract(false);
-					if (!disabledCharging) {
-						return CHARGING;
-					}
-				}
-				return this;
+				return RETRACTING;
 			}
 		},
-		CHARGING {
+		RETRACTING {
 			@Override
 			public void init(NewKickSequence nks) {
-				if (fullCharge) {
-					Robot.kicker.setCharge2();
-				} else {
-					Robot.kicker.setCharge1();
-				}
 			}
 
 			@Override
 			public State run(NewKickSequence nks) {
-				if (Robot.oi.discharge.get()) {
-					Robot.kicker.deactivateKickPistons();
-					nks.disableCharging();
-					return RESTING;
-				}
-				if (Robot.oi.kickButton.get()) {
-					return KICKING;
+				if (Robot.kicker.getPosition() == Position.retracted) {
+					return LATCH_PAUSE;
 				}
 				return this;
+			}
+		},
+		LATCH_PAUSE{
+			@Override
+			public void init(NewKickSequence nks) {
+				Robot.kicker.startTimer();
+			}
+			@Override
+			public State run(NewKickSequence nks) {
+				if(Robot.kicker.getTimeSinceStart() > .5) {
+					Robot.kicker.setLatch(LatchPosition.latched);
+					Robot.kicker.setRetract(false);
+					return RESTING;
+				}
+				return this;
+			}
+			
+		},
+		RESTING {
+			@Override
+			public void init(NewKickSequence nks) {
+				Robot.kicker.deactivateKickPistons();
+				Robot.kicker.startTimer();
+			}
+
+			@Override
+			public State run(NewKickSequence nks) {
+				if (Robot.oi.readyButton.get() && Robot.kicker.getTimeSinceStart() > 0.5) {
+					return PREKICK;
+				}
+				return this;
+			}
+		},
+		PREKICK {
+			@Override
+			public void init(NewKickSequence nks) {
+				Robot.kicker.startCharge();
+				Robot.intake.startFlat();
+			}
+
+			@Override
+			public State run(NewKickSequence nks) {
+				if (!Robot.oi.readyButton.get()) {
+					return RESTING;
+				}
+				if (Robot.oi.kickButton.get() && Robot.intake.getArmPosition() == ArmPosition.flat) {
+					return KICK;
+				}
+				return this;
+			}
+		},
+		KICK {
+			@Override
+			public void init(NewKickSequence nks) {
+				Robot.kicker.startTimer();
+			}
+
+			@Override
+			public State run(NewKickSequence nks) {
+				if (!Robot.oi.readyButton.get()) {
+					return RESTING;
+				}
+				Robot.kicker.setLatch(LatchPosition.unlatched);
+				return KICKING;
 			}
 		},
 		KICKING {
 			@Override
-			public void init(NewKickSequence nks) {
-				Robot.intake.startFlat();
-				timeSinceFlat = nks.getTime();
-			}
-
-			@Override
 			public State run(NewKickSequence nks) {
-				if (nks.getTime() - timeSinceFlat > 5 /*|| nks.getTime() - timeSinceFlat > TIMEOUT*/) {
-					Robot.kicker.setLatch(Kicker.LatchPosition.unlatched);
-					return RESTING;
+				if (!Robot.oi.readyButton.get()) {
+					return INIT;
+				}
+				if (Robot.kicker.getTimeSinceStart() > TIMEOUT || Robot.kicker.getPosition() == Position.extended) {
+					return INIT;
 				}
 				return this;
 			}
@@ -90,33 +131,13 @@ public class NewKickSequence extends Command {
 		}
 	}
 
-	private double getTime() {
-		return timeSinceInitialized();
-	}
-
-	public void disableCharging() {
-		disabledCharging = true;
-	}
-
-	public static void enableCharging() {
-		disabledCharging = false;
-	}
-
-	public void chargeSwitch() {
-		if (fullCharge) {
-			fullCharge = false;
-		} else {
-			fullCharge = true;
-		}
-	}
-
 	public NewKickSequence() {
 		requires(Robot.kicker);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		state = State.RESTING;
+		state = State.INIT;
 		state.init(this);
 	}
 
@@ -127,10 +148,6 @@ public class NewKickSequence extends Command {
 			state = newState;
 			state.init(this);
 		}
-		if (Robot.oi.chargeSwitch.get()) {
-			chargeSwitch();
-		}
-		SmartDashboard.putBoolean("disabledCharging", disabledCharging);
 		SmartDashboard.putString("Kicker state", state.toString());
 		SmartDashboard.putString("Intake position", Robot.intake.getArmPosition().toString());
 	}

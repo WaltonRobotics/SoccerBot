@@ -4,6 +4,7 @@
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * controls intake solenoids without a rea potentiometer
@@ -23,12 +24,14 @@ public class IntakeNoPotentiometer extends AbstractIntake {
 	@Override
 	public void setArmMovement(ArmMovement move) {
 		fallTimer.reset();
+		fallTimer.start();
 		super.setArmMovement(move);
 	}
 	
 	
 	@Override
 	public ArmPosition getArmPosition() {
+		SmartDashboard.putNumber("Fall Timer", fallTimer.get());
 		if(fallTimer.get() >= fallTime){
 			return ArmPosition.flat;
 		}

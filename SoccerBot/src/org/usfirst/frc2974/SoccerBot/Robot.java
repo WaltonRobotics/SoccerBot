@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 	public static DriveTrain driveTrain;
-	public static Intake intake;
+	public static AbstractIntake intake;
 	public static Inputs inputs;
 	public static Kicker kicker;
 
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 
 		driveTrain = new DriveTrain();
-		intake = new Intake();
+		intake = new IntakeNoPotentiometer();
 		inputs = new Inputs();
 		kicker = new Kicker();
 		// OI must be constructed after subsystems. If the OI creates Commands
@@ -65,6 +65,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		inputs.updateSmartDashboard();
+    	SmartDashboard.putNumber("Angle sensor", RobotMap.intakeAngleSensor.get());
 	}
 
 	public void autonomousInit() {
@@ -88,6 +89,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		intake.updateSmartDashboard();
+    	SmartDashboard.putNumber("Angle sensor", RobotMap.intakeAngleSensor.get());
 	}
 
 	/**

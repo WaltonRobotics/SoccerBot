@@ -41,6 +41,11 @@ abstract public class AbstractIntake extends Subsystem {
     protected final Solenoid extend = RobotMap.intakeArmExtend;
     protected final CANTalon armTalon = RobotMap.intakeArmTalon;
     protected final Solenoid retract = RobotMap.intakeArmRetract;
+    
+    public void updateSmartDashboard() {
+    	SmartDashboard.putString("arm movement", action.toString());
+    	SmartDashboard.putString("Arm position", getArmPosition().toString());
+    }
 
     
     public void initDefaultCommand() {
@@ -73,7 +78,6 @@ abstract public class AbstractIntake extends Subsystem {
     		break;    		
     	}
     	action = move;
-    	SmartDashboard.putString("arm movement", action.toString());
     }  
     
     public ArmMovement getAction()

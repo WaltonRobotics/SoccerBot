@@ -36,7 +36,6 @@ public class Intake extends AbstractIntake {
     public ArmPosition getArmPosition()
     {
     	double position = angleSensor.get();
-    	SmartDashboard.putNumber("Ange sensor", position);
     	if(position > transitionUpHigh){
     		return ArmPosition.up;	
     	}
