@@ -3,6 +3,7 @@ package org.usfirst.frc2974.SoccerBot.commands;
 import org.usfirst.frc2974.SoccerBot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,6 +26,7 @@ public class ToggleCharge extends Command {
     	if(!isDone) {
     		Robot.kicker.setCharge(!Robot.kicker.getCharge());
     		isDone = true;
+    		SmartDashboard.putBoolean("Full kick", Robot.kicker.getCharge());
     	}
     }
 
