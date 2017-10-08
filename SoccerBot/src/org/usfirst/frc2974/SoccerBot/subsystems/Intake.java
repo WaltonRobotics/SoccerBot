@@ -26,10 +26,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Intake extends AbstractIntake {
 
 	//enumerates the two cases used later; up, and fall
-	private final double transitionUpHigh = 60; //todo to be tuned 
-	private double transitionHighDribble = 50;
-	private double transitionDribbleLow = 40;
-	private final double transitionLowFlat = 30;
+	private final double transitionUpHigh = 150; //todo to be tuned 
+	private double transitionHighDribble = 122;
+	private double transitionDribbleLow = 93;
+	private final double transitionLowFlat = 66;
 
     private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
       

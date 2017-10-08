@@ -74,6 +74,9 @@ public class NewKickSequence extends Command {
 				if (Robot.oi.readyButton.get() && Robot.kicker.getTimeSinceStart() > 0.5) {
 					return PREKICK;
 				}
+				if (Robot.oi.adjustArm.get()) {
+					return ADJUST_ARM;
+				}
 				return this;
 			}
 		},
@@ -121,7 +124,20 @@ public class NewKickSequence extends Command {
 				}
 				return this;
 			}
-		};
+		},
+		ADJUST_ARM {
+			@Override
+			public void init(NewKickSequence nks) {
+				Robot.kicker.setLatch(LatchPosition.unlatched);
+			}
+			@Override
+			public State run(NewKickSequence nks) {
+				if(!Robot.oi.adjustArm.get()) {
+					return INIT;
+				}
+				return this;
+			}
+		}
 		public State run(NewKickSequence nks) {
 			return this;
 		}

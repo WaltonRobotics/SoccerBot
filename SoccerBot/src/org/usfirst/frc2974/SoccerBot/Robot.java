@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 
 		driveTrain = new DriveTrain();
-		intake = new IntakeNoPotentiometer();
+		intake = new Intake();
 		inputs = new Inputs();
 		kicker = new Kicker();
 		// OI must be constructed after subsystems. If the OI creates Commands

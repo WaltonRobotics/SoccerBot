@@ -3,6 +3,8 @@ package org.usfirst.frc2974.SoccerBot.commands;
 import org.usfirst.frc2974.SoccerBot.Robot;
 import org.usfirst.frc2974.SoccerBot.Gamepad.POV;
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
+import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmPosition;
+import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.Position;
 import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,19 +28,23 @@ public class IntakeFlat extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//todo display value on smartdashbord to show how much the arm has fallen
-//    	if(Robot.oi.dribbleButton.get())
-//    	{
-//    		new IntakeDribble().start();
-//    	}
-//    	if(Robot.oi.loadButton.get())
-//    	{
-//    		new IntakeLoad().start();
-//    	}
+    	if(Robot.oi.dribbleButton.get())
+    	{
+    		new IntakeDribble().start();
+    	}
+    	if(Robot.oi.loadButton.get())
+    	{
+    		new IntakeLoad().start();
+    	}
+    	if(Robot.oi.xbox.getPOVButton(POV.N)|| Robot.oi.xbox.getPOVButton(POV.S))
+    	{
+    		new IntakeManual().start();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.intake.getArmPosition() == ArmPosition.flat;
     }
     
     public void endFlat() {
