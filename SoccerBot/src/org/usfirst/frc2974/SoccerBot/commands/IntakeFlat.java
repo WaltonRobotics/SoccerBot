@@ -10,7 +10,7 @@ import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Makes the intake go to the flat position.
  */
 public class IntakeFlat extends Command {
 	

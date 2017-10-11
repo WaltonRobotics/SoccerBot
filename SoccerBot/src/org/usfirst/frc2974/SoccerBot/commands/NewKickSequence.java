@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * 2017 arm sequencing, defaults to be up and latched
  */
 public class NewKickSequence extends Command {
 
@@ -20,6 +20,9 @@ public class NewKickSequence extends Command {
 	private State state;
 
 	public enum State {
+		/**
+		 * Starts retracting the arm
+		 */
 		INIT {
 			@Override
 			public void init(NewKickSequence nks) {
@@ -42,10 +45,15 @@ public class NewKickSequence extends Command {
 			public State run(NewKickSequence nks) {
 				if (Robot.kicker.getPosition() == Position.retracted) {
 					return LATCH_PAUSE;
+				} else {
+					return INIT;
 				}
-				return this;
+				
 			}
 		},
+		/**
+		 * Waits a moment to latch, so the arm can have time to get all the way up
+		 */
 		LATCH_PAUSE{
 			@Override
 			public void init(NewKickSequence nks) {
@@ -55,6 +63,8 @@ public class NewKickSequence extends Command {
 			public State run(NewKickSequence nks) {
 				if(Robot.kicker.getTimeSinceStart() > .5) {
 					Robot.kicker.setLatch(LatchPosition.latched);
+				}
+				if(Robot.kicker.getTimeSinceStart() > .75) {
 					Robot.kicker.setRetract(false);
 					return RESTING;
 				}
@@ -62,6 +72,9 @@ public class NewKickSequence extends Command {
 			}
 			
 		},
+		/**
+		 * Ideal state
+		 */
 		RESTING {
 			@Override
 			public void init(NewKickSequence nks) {
@@ -77,9 +90,15 @@ public class NewKickSequence extends Command {
 				if (Robot.oi.adjustArm.get()) {
 					return ADJUST_ARM;
 				}
+				if(Robot.kicker.getPosition() != Position.retracted) {
+					return INIT;
+				}
 				return this;
 			}
 		},
+		/**
+		 * Primes the arm by providing pressure
+		 */
 		PREKICK {
 			@Override
 			public void init(NewKickSequence nks) {
@@ -125,6 +144,9 @@ public class NewKickSequence extends Command {
 				return this;
 			}
 		},
+		/**
+		 * Drops the arm while adjustArm is depressed, in case the latch is pressing against the arm
+		 */
 		ADJUST_ARM {
 			@Override
 			public void init(NewKickSequence nks) {
@@ -137,7 +159,7 @@ public class NewKickSequence extends Command {
 				}
 				return this;
 			}
-		}
+		};
 		public State run(NewKickSequence nks) {
 			return this;
 		}

@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * controls intake solenoids without a rea potentiometer
- *
+ * Uses a timer to estimate when the intake is flat, unreliable
  */
 public class IntakeNoPotentiometer extends AbstractIntake {
 	private final double fallTime = 4;

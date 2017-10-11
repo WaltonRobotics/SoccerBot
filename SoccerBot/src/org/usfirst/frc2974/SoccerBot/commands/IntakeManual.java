@@ -6,15 +6,14 @@ import org.usfirst.frc2974.SoccerBot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc2974.SoccerBot.subsystems.*;;
-
+import org.usfirst.frc2974.SoccerBot.subsystems.*;
+import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmPosition;;
 
 /**
- * @author piyus
- * @date 11-17-2015
+ * Moves the intake based off of the D-Pad
  */
 public class IntakeManual extends Command {
-	
+
 	public IntakeManual() {
 		super();
 
@@ -31,20 +30,23 @@ public class IntakeManual extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	/**
-	 * Runs the robot. 
-	 * Moves the loader up and down. Also runs the loaders TALON motors.
+	 * Runs the robot. Moves the loader up and down. Also runs the loaders TALON
+	 * motors.
 	 */
-	protected void execute() { 
+	protected void execute() {
 
-//		if(Robot.oi.dribbleButton.get())
-//			new IntakeDribble().start();
-//		
-//		if(Robot.oi.loadButton.get())
-//			new IntakeLoad().start();
-		
-		if(Robot.oi.flatButton.get())
+		if (Robot.oi.dribbleButton.get()) {
+			new IntakeDribble().start();
+		}
+
+		if (Robot.oi.loadButton.get()) {
+			new IntakeLoad().start();
+		}
+
+		if (Robot.oi.flatButton.get()) {
 			new IntakeFlat().start();
-		
+		}
+
 		boolean isUpPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.N);
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
 
@@ -70,15 +72,15 @@ public class IntakeManual extends Command {
 			}
 			break;
 		}
-		
-//		if(Robot.oi.xbox.getLeftTrigger()>.01)
-//		Robot.intake.setMotorPower(-.35);
-//		
-//		else if(Robot.oi.xbox.getRightTrigger()>.01)
-//			Robot.intake.setMotorPower(Robot.oi.xbox.getRightTrigger());
-//		
-//		else
-//			Robot.intake.setMotorPower(0);
+
+		// if(Robot.oi.xbox.getLeftTrigger()>.01)
+		// Robot.intake.setMotorPower(-.35);
+		//
+		// else if(Robot.oi.xbox.getRightTrigger()>.01)
+		// Robot.intake.setMotorPower(Robot.oi.xbox.getRightTrigger());
+		//
+		// else
+		// Robot.intake.setMotorPower(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -93,5 +95,6 @@ public class IntakeManual extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }

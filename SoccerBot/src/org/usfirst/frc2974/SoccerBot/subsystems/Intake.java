@@ -8,7 +8,6 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
 import org.usfirst.frc2974.SoccerBot.RobotMap;
@@ -19,48 +18,50 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
- *controls intake solenoids with an actual potentiometer
+ * Uses a potentiometer to standardize the intakes's position
  */
 public class Intake extends AbstractIntake {
 
-	//enumerates the two cases used later; up, and fall
-	private final double transitionUpHigh = 150; //todo to be tuned 
+	// enumerates the two cases used later; up, and fall
+	private final double transitionUpHigh = 150;
 	private double transitionHighDribble = 122;
 	private double transitionDribbleLow = 93;
 	private final double transitionLowFlat = 66;
 
-    private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
-      
-    public ArmPosition getArmPosition()
-    {
-    	double position = angleSensor.get();
-    	if(position > transitionUpHigh){
-    		return ArmPosition.up;	
-    	}
-    	if(position > transitionHighDribble){
-    		return ArmPosition.high;
-    	}
-    	if(position > transitionDribbleLow){
-    		return ArmPosition.dribble;
-    	}
-    	if(position > transitionLowFlat){
-    		return ArmPosition.low;
-    	}
-    	return ArmPosition.flat;
-    }
-    
-    public void setDribbleMode()
-    {
-    	transitionHighDribble = 660;
-    	transitionDribbleLow = 620;
-    }
-    
-    public void setLoadMOde()
-    {
-    	transitionHighDribble = 700;
-    	transitionDribbleLow = 660;
-    }
-}
+	private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
 
+	/**
+	 * Locates the arm based off of the ranges set in class.
+	 * 
+	 * @return the current ArmPosition.
+	 */
+	public ArmPosition getArmPosition() {
+		double position = angleSensor.get();
+		if (position > transitionUpHigh) {
+			return ArmPosition.up;
+		}
+		if (position > transitionHighDribble) {
+			return ArmPosition.high;
+		}
+		if (position > transitionDribbleLow) {
+			return ArmPosition.dribble;
+		}
+		if (position > transitionLowFlat) {
+			return ArmPosition.low;
+		}
+		return ArmPosition.flat;
+	}
+
+	// unused
+	public void setDribbleMode() {
+		transitionHighDribble = 660;
+		transitionDribbleLow = 620;
+	}
+
+	// unused
+	public void setLoadMOde() {
+		transitionHighDribble = 700;
+		transitionDribbleLow = 660;
+	}
+}

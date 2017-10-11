@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Command used to toggle between a full charge and a half charge
  */
 public class ToggleCharge extends Command {
 

@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
- *controls the intake solenoids
+ * Abstract class for use with Intake or IntakeNoPotentiometer
  */
 abstract public class AbstractIntake extends Subsystem {
 
