@@ -1,14 +1,12 @@
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.commands.Kick;
-import org.usfirst.frc2974.SoccerBot.commands.NewKickSequence;
-import org.usfirst.frc2974.SoccerBot.commands.Retract;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc2974.SoccerBot.RobotMap;
+import org.usfirst.frc2974.SoccerBot.commands.Kick;
+import org.usfirst.frc2974.SoccerBot.commands.NewKickSequence;
 
 /**
  * Subsystem used by NewKickSequence
@@ -21,23 +19,14 @@ public class Kicker extends Subsystem {
 	private final Solenoid latch = RobotMap.latch;
 	private final DigitalInput limitSwitchForward = RobotMap.limitSwitchForward;
 	private final DigitalInput limitSwitchBackward = RobotMap.limitSwitchBackward;
+	LatchPosition latchPosition;
 	private boolean fullCharge = true;
 	private boolean willCharge = true;
 	private double timer;
-
-	LatchPosition latchPosition;
 	// private Kick kickCommand = new Kick();
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new NewKickSequence());
-	}
-
-	public enum LatchPosition {
-		latched, unlatched
-	}
-
-	public enum Position {
-		extended, retracted, dontKnow
 	}
 
 	public void setRetract(boolean bool) {
@@ -55,14 +44,14 @@ public class Kicker extends Subsystem {
 
 	public void setLatch(LatchPosition lp) {
 		switch (lp) {
-		case latched:
-			latch.set(false);
-			latchPosition = LatchPosition.latched;
-			break;
-		case unlatched:
-			latch.set(true);
-			latchPosition = LatchPosition.unlatched;
-			break;
+			case latched:
+				latch.set(false);
+				latchPosition = LatchPosition.latched;
+				break;
+			case unlatched:
+				latch.set(true);
+				latchPosition = LatchPosition.unlatched;
+				break;
 		}
 	}
 
@@ -103,29 +92,40 @@ public class Kicker extends Subsystem {
 	}
 
 	public Position getPosition() {
-		if (!limitSwitchForward.get())
+		if (!limitSwitchForward.get()) {
 			return Position.extended;
+		}
 
-		if (!limitSwitchBackward.get())
+		if (!limitSwitchBackward.get()) {
 			return Position.retracted;
+		}
 
 		return Position.dontKnow;
 
-	}
-
-	public void setCharge(boolean charge) {
-		fullCharge = charge;
 	}
 
 	public boolean getCharge() {
 		return fullCharge;
 	}
 
+	public void setCharge(boolean charge) {
+		fullCharge = charge;
+	}
+
 	public void startTimer() {
 		timer = Timer.getFPGATimestamp();
 	}
+
 	public double getTimeSinceStart() {
 		return Timer.getFPGATimestamp() - timer;
+	}
+
+	public enum LatchPosition {
+		latched, unlatched
+	}
+
+	public enum Position {
+		extended, retracted, dontKnow
 	}
 
 }

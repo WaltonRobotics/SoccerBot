@@ -10,14 +10,13 @@
 
 package org.usfirst.frc2974.SoccerBot;
 
-import org.usfirst.frc2974.SoccerBot.commands.ToggleCharge;
-
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc2974.SoccerBot.commands.ToggleCharge;
 
 /**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * This class is the glue that binds the controls on the physical operator interface to the commands and command groups
+ * that allow control of the robot.
  */
 public class OI {
 	//// CREATING BUTTONS
@@ -77,7 +76,7 @@ public class OI {
 		flatButton = new JoystickButton(xbox, 5);
 		manualButton = new JoystickButton(xbox, 6);
 		dribbleButton = new JoystickButton(xbox, 7);
-		loadButton = new JoystickButton(xbox,8);
+		loadButton = new JoystickButton(xbox, 8);
 		discharge = new JoystickButton(xbox, 9);
 		chargeSwitch = new JoystickButton(xbox, 10);
 

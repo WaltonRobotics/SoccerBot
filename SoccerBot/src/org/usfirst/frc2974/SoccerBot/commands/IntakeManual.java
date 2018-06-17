@@ -1,13 +1,11 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc2974.SoccerBot.Gamepad;
 import org.usfirst.frc2974.SoccerBot.Robot;
+import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc2974.SoccerBot.subsystems.*;
-import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmPosition;;
+;
 
 /**
  * Moves the intake based off of the D-Pad
@@ -21,6 +19,7 @@ public class IntakeManual extends Command {
 	}
 
 	// Called just before this Command runs the first time
+
 	/**
 	 * Called just before this Command runs the first time
 	 */
@@ -29,9 +28,9 @@ public class IntakeManual extends Command {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
+
 	/**
-	 * Runs the robot. Moves the loader up and down. Also runs the loaders TALON
-	 * motors.
+	 * Runs the robot. Moves the loader up and down. Also runs the loaders TALON motors.
 	 */
 	protected void execute() {
 
@@ -51,26 +50,26 @@ public class IntakeManual extends Command {
 		boolean isFallPressed = Robot.oi.xbox.getPOVButton(Gamepad.POV.S);
 
 		switch (Robot.intake.getAction()) {
-		// if not pressed, block
-		case up:
-			if (!isUpPressed) {
-				Robot.intake.setArmMovement(Intake.ArmMovement.block);
-			}
-			break;
-		// if not pressed, block
-		case fall:
-			if (!isFallPressed) {
-				Robot.intake.setArmMovement(Intake.ArmMovement.block);
-			}
-			break;
-		// if pressed and in block, go up or down
-		case block:
-			if (isUpPressed) {
-				Robot.intake.setArmMovement(Intake.ArmMovement.up);
-			} else if (isFallPressed) {
-				Robot.intake.setArmMovement(Intake.ArmMovement.fall);
-			}
-			break;
+			// if not pressed, block
+			case up:
+				if (!isUpPressed) {
+					Robot.intake.setArmMovement(Intake.ArmMovement.block);
+				}
+				break;
+			// if not pressed, block
+			case fall:
+				if (!isFallPressed) {
+					Robot.intake.setArmMovement(Intake.ArmMovement.block);
+				}
+				break;
+			// if pressed and in block, go up or down
+			case block:
+				if (isUpPressed) {
+					Robot.intake.setArmMovement(Intake.ArmMovement.up);
+				} else if (isFallPressed) {
+					Robot.intake.setArmMovement(Intake.ArmMovement.fall);
+				}
+				break;
 		}
 
 		// if(Robot.oi.xbox.getLeftTrigger()>.01)

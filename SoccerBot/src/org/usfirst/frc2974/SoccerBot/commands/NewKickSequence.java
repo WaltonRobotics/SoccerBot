@@ -1,14 +1,11 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc2974.SoccerBot.Robot;
-import org.usfirst.frc2974.SoccerBot.subsystems.Kicker;
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmPosition;
 import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.LatchPosition;
 import org.usfirst.frc2974.SoccerBot.subsystems.Kicker.Position;
-
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 2017 arm sequencing, defaults to be up and latched
@@ -18,6 +15,44 @@ public class NewKickSequence extends Command {
 	final private static double TIMEOUT = 3;
 
 	private State state;
+
+	public NewKickSequence() {
+		requires(Robot.kicker);
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		state = State.INIT;
+		state.init(this);
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		State newState = state.run(this);
+		if (newState != state) {
+			state = newState;
+			state.init(this);
+		}
+		SmartDashboard.putString("Kicker state", state.toString());
+		SmartDashboard.putString("Intake position", Robot.intake.getArmPosition().toString());
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.kicker.setOff();
+		Robot.intake.endFlat();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 
 	public enum State {
 		/**
@@ -48,29 +83,30 @@ public class NewKickSequence extends Command {
 				} else {
 					return INIT;
 				}
-				
+
 			}
 		},
 		/**
 		 * Waits a moment to latch, so the arm can have time to get all the way up
 		 */
-		LATCH_PAUSE{
+		LATCH_PAUSE {
 			@Override
 			public void init(NewKickSequence nks) {
 				Robot.kicker.startTimer();
 			}
+
 			@Override
 			public State run(NewKickSequence nks) {
-				if(Robot.kicker.getTimeSinceStart() > .5) {
+				if (Robot.kicker.getTimeSinceStart() > .5) {
 					Robot.kicker.setLatch(LatchPosition.latched);
 				}
-				if(Robot.kicker.getTimeSinceStart() > .75) {
+				if (Robot.kicker.getTimeSinceStart() > .75) {
 					Robot.kicker.setRetract(false);
 					return RESTING;
 				}
 				return this;
 			}
-			
+
 		},
 		/**
 		 * Ideal state
@@ -90,7 +126,7 @@ public class NewKickSequence extends Command {
 				if (Robot.oi.adjustArm.get()) {
 					return ADJUST_ARM;
 				}
-				if(Robot.kicker.getPosition() != Position.retracted) {
+				if (Robot.kicker.getPosition() != Position.retracted) {
 					return INIT;
 				}
 				return this;
@@ -152,14 +188,16 @@ public class NewKickSequence extends Command {
 			public void init(NewKickSequence nks) {
 				Robot.kicker.setLatch(LatchPosition.unlatched);
 			}
+
 			@Override
 			public State run(NewKickSequence nks) {
-				if(!Robot.oi.adjustArm.get()) {
+				if (!Robot.oi.adjustArm.get()) {
 					return INIT;
 				}
 				return this;
 			}
 		};
+
 		public State run(NewKickSequence nks) {
 			return this;
 		}
@@ -167,44 +205,6 @@ public class NewKickSequence extends Command {
 		public void init(NewKickSequence nks) {
 
 		}
-	}
-
-	public NewKickSequence() {
-		requires(Robot.kicker);
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		state = State.INIT;
-		state.init(this);
-	}
-
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		State newState = state.run(this);
-		if (newState != state) {
-			state = newState;
-			state.init(this);
-		}
-		SmartDashboard.putString("Kicker state", state.toString());
-		SmartDashboard.putString("Intake position", Robot.intake.getArmPosition().toString());
-	}
-
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
-
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.kicker.setOff();
-		Robot.intake.endFlat();
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
 	}
 
 }

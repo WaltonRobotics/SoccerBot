@@ -10,13 +10,8 @@
 
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.commands.*;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Solenoid;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc2974.SoccerBot.RobotMap;
 
 /**
  * Uses a potentiometer to standardize the intakes's position
@@ -25,15 +20,14 @@ public class Intake extends AbstractIntake {
 
 	// enumerates the two cases used later; up, and fall
 	private final double transitionUpHigh = 150;
+	private final double transitionLowFlat = 66;
+	private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
 	private double transitionHighDribble = 122;
 	private double transitionDribbleLow = 93;
-	private final double transitionLowFlat = 66;
-
-	private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
 
 	/**
 	 * Locates the arm based off of the ranges set in class.
-	 * 
+	 *
 	 * @return the current ArmPosition.
 	 */
 	public ArmPosition getArmPosition() {

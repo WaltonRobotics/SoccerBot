@@ -11,15 +11,13 @@
 
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.commands.*;
-
 import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.Solenoid;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc2974.SoccerBot.RobotMap;
+import org.usfirst.frc2974.SoccerBot.commands.IntakeFlat;
+import org.usfirst.frc2974.SoccerBot.commands.IntakeManual;
 
 
 /**
@@ -27,72 +25,70 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 abstract public class AbstractIntake extends Subsystem {
 
+	protected final Solenoid extend = RobotMap.intakeArmExtend;
+	protected final CANTalon armTalon = RobotMap.intakeArmTalon;
+	protected final Solenoid retract = RobotMap.intakeArmRetract;
+	//protected IntakeFlat flatCommand = new IntakeFlat();
+	protected ArmMovement action;
+
+	public void updateSmartDashboard() {
+		SmartDashboard.putString("arm movement", action.toString());
+		SmartDashboard.putString("Arm position", getArmPosition().toString());
+	}
+
+	public void initDefaultCommand() {
+		setDefaultCommand(new IntakeManual());
+	}
+
+	public void startFlat() {
+		new IntakeFlat().start();
+	}
+
+	public void endFlat() {
+		new IntakeManual().start();
+	}
+
+	//sets solenoid values to true/false depending on case
+	public void setArmMovement(ArmMovement move) {
+		switch (move) {
+			case fall:
+				extend.set(true);
+				retract.set(false);
+				break;
+			case up:
+				extend.set(false);
+				retract.set(true);
+				break;
+			case block:
+				extend.set(false);
+				retract.set(false);
+				break;
+		}
+		action = move;
+	}
+
+	public ArmMovement getAction() {
+		return action;
+	}
+
+	/**
+	 * sets speed of motor on intake arm
+	 *
+	 * @param speed da speed
+	 */
+	public void setMotorPower(double speed) {
+		armTalon.set(speed);
+	}
+
+	abstract public ArmPosition getArmPosition();
+
 	//enumerates the two cases used later; up, and fall
 	public enum ArmMovement {
 		up, fall, block
 	}
+
 	public enum ArmPosition {
 		up, high, dribble, low, flat
 	}
-
-	protected ArmMovement action;
-    //protected IntakeFlat flatCommand = new IntakeFlat(); 
-	
-    protected final Solenoid extend = RobotMap.intakeArmExtend;
-    protected final CANTalon armTalon = RobotMap.intakeArmTalon;
-    protected final Solenoid retract = RobotMap.intakeArmRetract;
-    
-    public void updateSmartDashboard() {
-    	SmartDashboard.putString("arm movement", action.toString());
-    	SmartDashboard.putString("Arm position", getArmPosition().toString());
-    }
-
-    
-    public void initDefaultCommand() {
-        setDefaultCommand(new IntakeManual());
-    }
-    
-    public void startFlat() {
-    	new IntakeFlat().start();
-    }
-    
-    public void endFlat() {
-    	new IntakeManual().start();
-    }
-    
-    //sets solenoid values to true/false depending on case
-    public void setArmMovement(ArmMovement move)
-    {	
-    	switch(move){
-    	case fall:
-    		extend.set(true);
-    		retract.set(false);
-    		break;
-    	case up:
-    		extend.set(false);
-    		retract.set(true);
-    		break;
-    	case block:
-    		extend.set(false);
-    	    retract.set(false);
-    		break;    		
-    	}
-    	action = move;
-    }  
-    
-    public ArmMovement getAction()
-    {
-    	return action;
-    }
-    /**
-     * sets speed of motor on intake arm
-     * @param speed da speed
-     */
-    public void setMotorPower(double speed)
-    {
-    	armTalon.set(speed);
-    }
-    
-    abstract public ArmPosition getArmPosition();    
 }
 

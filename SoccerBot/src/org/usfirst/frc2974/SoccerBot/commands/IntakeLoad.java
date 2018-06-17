@@ -1,21 +1,19 @@
 package org.usfirst.frc2974.SoccerBot.commands;
 
-import org.usfirst.frc2974.SoccerBot.Gamepad.POV;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc2974.SoccerBot.Gamepad;
 import org.usfirst.frc2974.SoccerBot.Robot;
 import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmMovement;
 import org.usfirst.frc2974.SoccerBot.subsystems.AbstractIntake.ArmPosition;
-
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc2974.SoccerBot.subsystems.Intake;
 
 /**
  * Makes the intake go to the dribble position, turns the motor to load a ball
  */
 public class IntakeLoad extends Command {
+
 	private final AnalogPotentiometer angleSensor = RobotMap.intakeAngleSensor;
 	private boolean initialized = false;
 
@@ -31,7 +29,7 @@ public class IntakeLoad extends Command {
 		if (Robot.intake.getArmPosition() == ArmPosition.up || Robot.intake.getArmPosition() == ArmPosition.high) {
 			Robot.intake.setArmMovement(ArmMovement.fall);
 		} else if (Robot.intake.getArmPosition() == ArmPosition.low
-				|| Robot.intake.getArmPosition() == ArmPosition.flat) {
+			|| Robot.intake.getArmPosition() == ArmPosition.flat) {
 			Robot.intake.setArmMovement(ArmMovement.up);
 		}
 	}

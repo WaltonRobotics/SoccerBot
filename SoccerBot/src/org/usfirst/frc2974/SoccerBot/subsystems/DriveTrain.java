@@ -11,11 +11,10 @@
 
 package org.usfirst.frc2974.SoccerBot.subsystems;
 
-import org.usfirst.frc2974.SoccerBot.RobotMap;
-import org.usfirst.frc2974.SoccerBot.commands.*;
 import edu.wpi.first.wpilibj.SpeedController;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc2974.SoccerBot.RobotMap;
+import org.usfirst.frc2974.SoccerBot.commands.Drive;
 
 
 /**
@@ -23,21 +22,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-    private final SpeedController driveTrainFrontL = RobotMap.driveTrainFrontL;
-    private final SpeedController driveTrainFrontR = RobotMap.driveTrainFrontR;
-    private final SpeedController driveTrainBackL = RobotMap.driveTrainBackL;
-    private final SpeedController driveTrainBackR = RobotMap.driveTrainBackR;
+	private final SpeedController driveTrainFrontL = RobotMap.driveTrainFrontL;
+	private final SpeedController driveTrainFrontR = RobotMap.driveTrainFrontR;
+	private final SpeedController driveTrainBackL = RobotMap.driveTrainBackL;
+	private final SpeedController driveTrainBackR = RobotMap.driveTrainBackR;
 
-    public void initDefaultCommand() {
-    	setDefaultCommand(new Drive());
-    }
-    
-    public void setSpeeds(double left, double right)
-    {
-    	driveTrainBackL.set(left);
-    	driveTrainBackR.set(-right);
-    	driveTrainFrontL.set(left);
-    	driveTrainFrontR.set(-right);
-    }
+	public void initDefaultCommand() {
+		setDefaultCommand(new Drive());
+	}
+
+	public void setSpeeds(double left, double right) {
+		driveTrainBackL.set(left);
+		driveTrainBackR.set(-right);
+		driveTrainFrontL.set(left);
+		driveTrainFrontR.set(-right);
+	}
 }
 
